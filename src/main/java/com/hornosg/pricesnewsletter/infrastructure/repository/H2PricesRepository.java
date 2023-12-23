@@ -16,18 +16,10 @@ import java.util.List;
 
 @Repository
 public class H2PricesRepository implements PricesRepository {
-    @Value("${database.url}")
-    private String dbUrl;
-
-    @Value("${database.user}")
-    private String user;
-
-    @Value("${database.password}")
-    private String password;
+    private Connection dbStatement;
 
     private Statement connect() throws SQLException {
-        Connection conn = DriverManager.getConnection(dbUrl, user, password);
-        return conn.createStatement();
+        return dbStatement.createStatement();
     }
 
 
@@ -42,7 +34,7 @@ public class H2PricesRepository implements PricesRepository {
                 prices.add(mapPrice(rs));
             }
 
-            return prices;
+        return prices;
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -54,8 +46,8 @@ public class H2PricesRepository implements PricesRepository {
             rs.getString("id"),
             rs.getInt("brandId"),
             rs.getInt("productId"),
-            rs.getString("validDateFrom"),
-            rs.getString("validDateTo"),
+            rs.getTimestamp("validDateFrom").toLocalDateTime(),
+            rs.getTimestamp("validDateTo").toLocalDateTime(),
             rs.getInt("priceRateId"),
             rs.getInt("priority"),
             rs.getBigDecimal("price"),

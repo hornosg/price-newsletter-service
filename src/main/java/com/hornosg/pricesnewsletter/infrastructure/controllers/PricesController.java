@@ -12,12 +12,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/v1/prices")
 public class PricesController {
-
-    private final H2PricesRepository repository;
     private final FindPrices findPrices;
 
     public PricesController() {
-        this.repository = new H2PricesRepository();
+        H2PricesRepository repository = new H2PricesRepository();
         this.findPrices = new FindPrices(repository);
     }
 

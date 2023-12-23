@@ -7,7 +7,7 @@ import com.hornosg.pricesnewsletter.domain.PricesRepository;
 import java.util.List;
 
 public class FindPrices {
-    private PricesRepository pricesRepository;
+    private final PricesRepository pricesRepository;
 
     public FindPrices(PricesRepository pricesRepository) {
         this.pricesRepository = pricesRepository;
