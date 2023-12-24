@@ -1,6 +1,4 @@
-package com.hornosg.pricesnewsletter.domain;
-
-import org.springframework.data.annotation.Id;
+package com.hornosg.pricesnewsletter.domain.entities;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -28,4 +26,29 @@ public class Price {
         this.price = price;
         this.currencyId = currencyId;
     }
+
+    public Integer getBrandId() {
+        return brandId;
+    }
+
+    public Integer getProductId() {
+        return productId;
+    }
+
+    public LocalDateTime getValidDateFrom() {
+        return validDateFrom;
+    }
+
+    public LocalDateTime getValidDateTo() {
+        return validDateTo;
+    }
+
+    public Integer getPriceRateId() {
+        return priceRateId;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
 }

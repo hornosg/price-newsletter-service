@@ -1,7 +1,8 @@
-package com.hornosg.pricesnewsletter.domain;
+package com.hornosg.pricesnewsletter.domain.interfaces;
 
-import java.util.List;
+import com.hornosg.pricesnewsletter.domain.dtos.FindPriceRequest;
+import com.hornosg.pricesnewsletter.domain.entities.Price;
 
 public interface PricesRepository {
-    List<Price> findPrices(FindPricesRequest request);
+    Price findPrice(FindPriceRequest request);
 }

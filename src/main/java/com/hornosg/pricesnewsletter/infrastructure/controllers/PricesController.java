@@ -1,26 +1,29 @@
-package com.hornosg.pricesnewsletter.infrastructure;
+package com.hornosg.pricesnewsletter.infrastructure.controllers;
 
-import com.hornosg.pricesnewsletter.application.FindPrices;
-import com.hornosg.pricesnewsletter.domain.FindPricesRequest;
-import com.hornosg.pricesnewsletter.domain.Price;
+import com.hornosg.pricesnewsletter.application.usescases.FindPrice;
+import com.hornosg.pricesnewsletter.domain.dtos.FindPriceRequest;
+import com.hornosg.pricesnewsletter.infrastructure.repository.H2PricesRepository;
+import org.hibernate.annotations.Parameter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/v1/prices")
 public class PricesController {
-    private final FindPrices findPrices;
+    private final FindPrice findPrice;
 
-    public PricesController() {
-        H2PricesRepository repository = new H2PricesRepository();
-        this.findPrices = new FindPrices(repository);
+    @Autowired
+    public PricesController(H2PricesRepository repository) {
+        this.findPrice = new FindPrice(repository);
     }
 
-    @GetMapping("/list")
-    public List<Price> listPrices(FindPricesRequest request) {
-        return findPrices.invoke(request);
+    @GetMapping("/find")
+    public ResponseEntity<?> getPrice(@ModelAttribute FindPriceRequest request) {
+        return new ResponseEntity<>(findPrice.invoke(request), org.springframework.http.HttpStatus.OK);
     }
 }

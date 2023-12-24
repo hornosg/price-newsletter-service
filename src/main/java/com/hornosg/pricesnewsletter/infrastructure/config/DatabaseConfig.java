@@ -3,24 +3,32 @@ package com.hornosg.pricesnewsletter.infrastructure.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import javax.sql.DataSource;
 
 @Configuration
 public class DatabaseConfig {
 
-    @Value("${database.url}")
-    private String dbUrl;
+    @Value("${spring.datasource.url}")
+    private String url;
 
-    @Value("${database.user}")
-    private String user;
+    @Value("${spring.datasource.driverClassName}")
+    private String driverClassName;
 
-    @Value("${database.password}")
+    @Value("${spring.datasource.username}")
+    private String username;
+
+    @Value("${spring.datasource.password}")
     private String password;
 
     @Bean
-    public H2DbConnection dbConnection() throws SQLException {
-        return new H2DbConnection(DriverManager.getConnection(dbUrl, user, password));
+    public DataSource dataSource() {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName(driverClassName);
+        dataSource.setUrl(url);
+        dataSource.setUsername(username);
+        dataSource.setPassword(password);
+        return dataSource;
     }
 }
